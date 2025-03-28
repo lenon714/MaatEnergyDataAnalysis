@@ -862,403 +862,406 @@ def format_string(s):
       formatted_parts.append(part)  # Keep unchanged if it doesn't match
   return ", ".join(formatted_parts)  # Join back with a comma and space
 
-# Toggles between Lab A and Lab B
-lab_toggle = widgets.ToggleButton(description="Lab A", button_style="danger")
-def update_lab_text(b):
-  global column_groups, column_keys, column_groups_A, column_keys_A, column_groups_B, column_keys_B, lab
-  lab_toggle.description = "Lab B" if b['new'] else "Lab A"
-  lab_toggle.button_style = "info" if b['new'] else "danger"
-  lab = "B" if b['new'] else "A"
-  column_groups = column_groups_B if b['new'] else column_groups_A
-  column_keys = column_keys_B if b['new'] else column_keys_A
+def main():
+    # Toggles between Lab A and Lab B
+    lab_toggle = widgets.ToggleButton(description="Lab A", button_style="danger")
+    def update_lab_text(b):
+    global column_groups, column_keys, column_groups_A, column_keys_A, column_groups_B, column_keys_B, lab
+    lab_toggle.description = "Lab B" if b['new'] else "Lab A"
+    lab_toggle.button_style = "info" if b['new'] else "danger"
+    lab = "B" if b['new'] else "A"
+    column_groups = column_groups_B if b['new'] else column_groups_A
+    column_keys = column_keys_B if b['new'] else column_keys_A
 
-  if lab == "A":
-    grp_dropdown.options = col_names
-  elif lab == "B":
-    grp_dropdown.options = col_names[:5]
-  get_one_var_options()
-lab_toggle.observe(update_lab_text, names='value')
+    if lab == "A":
+        grp_dropdown.options = col_names
+    elif lab == "B":
+        grp_dropdown.options = col_names[:5]
+    get_one_var_options()
+    lab_toggle.observe(update_lab_text, names='value')
 
-# Dropdown for selecting plotting function
-plot_select = widgets.Dropdown(options=["PlotRun_W_DATAQ", "PlotRun",
-                                        "PlotGroup", "PlotSingleVar",
-                                        "PlotInteractive", "PlotDATAQ",
-                                        "PlotCustom"],
-                                    description="Function",
+    # Dropdown for selecting plotting function
+    plot_select = widgets.Dropdown(options=["PlotRun_W_DATAQ", "PlotRun",
+                                            "PlotGroup", "PlotSingleVar",
+                                            "PlotInteractive", "PlotDATAQ",
+                                            "PlotCustom"],
+                                        description="Function",
+                                        style={'description_width': 'initial'})
+    def on_plot_select_change(b):
+    # Updates which widgets to display based on plotting function
+    if b["new"] == "PlotRun_W_DATAQ":
+        grp_dropdown.layout.display = "none"
+        one_var_dropdown.layout.display = "none"
+        addon_tab.layout.display = "block"
+        xaxis_label.layout.display = "block"
+        xaxis_low.layout.display = "block"
+        xaxis_high.layout.display = "block"
+        yaxis_label.layout.display = "block"
+        yaxis_label.value = "Y Axis"
+        yaxis_low.layout.display = "block"
+        yaxis_high.layout.display = "block"
+        yaxis2_label.value = "RP Y Axis"
+        yaxis2_label.layout.display = "block"
+        yaxis2_low.layout.display = "block"
+        yaxis2_high.layout.display = "block"
+        custom_tab.layout.display = "none"
+    elif b["new"] == "PlotRun":
+        grp_dropdown.layout.display = "none"
+        one_var_dropdown.layout.display = "none"
+        addon_tab.layout.display = "none"
+        custom_tab.layout.display = "none"
+    elif b["new"] == "PlotGroup":
+        grp_dropdown.layout.display = "block"
+        one_var_dropdown.layout.display = "none"
+        addon_tab.layout.display = "block"
+        xaxis_label.layout.display = "block"
+        xaxis_low.layout.display = "block"
+        xaxis_high.layout.display = "block"
+        yaxis_label.layout.display = "block"
+        yaxis_label.value = "Y Axis"
+        yaxis_low.layout.display = "block"
+        yaxis_high.layout.display = "block"
+        yaxis2_label.layout.display = "none"
+        yaxis2_low.layout.display = "none"
+        yaxis2_high.layout.display = "none"
+        custom_tab.layout.display = "none"
+    elif b["new"] == "PlotSingleVar":
+        grp_dropdown.layout.display = "block"
+        one_var_dropdown.layout.display = "block"
+        addon_tab.layout.display = "block"
+        xaxis_label.layout.display = "block"
+        xaxis_low.layout.display = "block"
+        xaxis_high.layout.display = "block"
+        yaxis_label.layout.display = "block"
+        yaxis_label.value = "Y Axis"
+        yaxis_low.layout.display = "block"
+        yaxis_high.layout.display = "block"
+        yaxis2_label.layout.display = "none"
+        yaxis2_low.layout.display = "none"
+        yaxis2_high.layout.display = "none"
+        custom_tab.layout.display = "none"
+    elif b["new"] == "PlotInteractive":
+        grp_dropdown.layout.display = "block"
+        one_var_dropdown.layout.display = "block"
+        addon_tab.layout.display = "block"
+        xaxis_label.layout.display = "block"
+        xaxis_low.layout.display = "block"
+        xaxis_high.layout.display = "block"
+        yaxis_label.layout.display = "block"
+        yaxis_label.value = "Y Axis"
+        yaxis_low.layout.display = "block"
+        yaxis_high.layout.display = "block"
+        yaxis2_label.layout.display = "none"
+        yaxis2_low.layout.display = "none"
+        yaxis2_high.layout.display = "none"
+        custom_tab.layout.display = "none"
+    elif b["new"] == "PlotDATAQ":
+        grp_dropdown.layout.display = "none"
+        one_var_dropdown.layout.display = "none"
+        addon_tab.layout.display = "block"
+        xaxis_label.layout.display = "block"
+        xaxis_low.layout.display = "block"
+        xaxis_high.layout.display = "block"
+        yaxis_label.layout.display = "block"
+        yaxis_label.value = "FP Y Axis"
+        yaxis_low.layout.display = "block"
+        yaxis_high.layout.display = "block"
+        yaxis2_label.layout.display = "block"
+        yaxis2_low.layout.display = "block"
+        yaxis2_high.layout.display = "block"
+        custom_tab.layout.display = "none"
+    elif b["new"] == "PlotCustom":
+        grp_dropdown.layout.display = "none"
+        one_var_dropdown.layout.display = "none"
+        addon_tab.layout.display = "none"
+        extra_tab.layout.display = "block"
+        custom_tab.layout.display = "block"
+    try:
+        update_run_options(exp_dropdown.value)
+    except:
+        pass
+    plot_select.observe(on_plot_select_change, names='value')
+
+    # Combobox for selecting experiment
+    exp_dropdown = widgets.Combobox(options=[], description='Experiment',
                                     style={'description_width': 'initial'})
-def on_plot_select_change(b):
-  # Updates which widgets to display based on plotting function
-  if b["new"] == "PlotRun_W_DATAQ":
-    grp_dropdown.layout.display = "none"
-    one_var_dropdown.layout.display = "none"
-    addon_tab.layout.display = "block"
-    xaxis_label.layout.display = "block"
-    xaxis_low.layout.display = "block"
-    xaxis_high.layout.display = "block"
-    yaxis_label.layout.display = "block"
-    yaxis_label.value = "Y Axis"
-    yaxis_low.layout.display = "block"
-    yaxis_high.layout.display = "block"
-    yaxis2_label.value = "RP Y Axis"
-    yaxis2_label.layout.display = "block"
-    yaxis2_low.layout.display = "block"
-    yaxis2_high.layout.display = "block"
-    custom_tab.layout.display = "none"
-  elif b["new"] == "PlotRun":
-    grp_dropdown.layout.display = "none"
-    one_var_dropdown.layout.display = "none"
-    addon_tab.layout.display = "none"
-    custom_tab.layout.display = "none"
-  elif b["new"] == "PlotGroup":
-    grp_dropdown.layout.display = "block"
-    one_var_dropdown.layout.display = "none"
-    addon_tab.layout.display = "block"
-    xaxis_label.layout.display = "block"
-    xaxis_low.layout.display = "block"
-    xaxis_high.layout.display = "block"
-    yaxis_label.layout.display = "block"
-    yaxis_label.value = "Y Axis"
-    yaxis_low.layout.display = "block"
-    yaxis_high.layout.display = "block"
-    yaxis2_label.layout.display = "none"
-    yaxis2_low.layout.display = "none"
-    yaxis2_high.layout.display = "none"
-    custom_tab.layout.display = "none"
-  elif b["new"] == "PlotSingleVar":
-    grp_dropdown.layout.display = "block"
-    one_var_dropdown.layout.display = "block"
-    addon_tab.layout.display = "block"
-    xaxis_label.layout.display = "block"
-    xaxis_low.layout.display = "block"
-    xaxis_high.layout.display = "block"
-    yaxis_label.layout.display = "block"
-    yaxis_label.value = "Y Axis"
-    yaxis_low.layout.display = "block"
-    yaxis_high.layout.display = "block"
-    yaxis2_label.layout.display = "none"
-    yaxis2_low.layout.display = "none"
-    yaxis2_high.layout.display = "none"
-    custom_tab.layout.display = "none"
-  elif b["new"] == "PlotInteractive":
-    grp_dropdown.layout.display = "block"
-    one_var_dropdown.layout.display = "block"
-    addon_tab.layout.display = "block"
-    xaxis_label.layout.display = "block"
-    xaxis_low.layout.display = "block"
-    xaxis_high.layout.display = "block"
-    yaxis_label.layout.display = "block"
-    yaxis_label.value = "Y Axis"
-    yaxis_low.layout.display = "block"
-    yaxis_high.layout.display = "block"
-    yaxis2_label.layout.display = "none"
-    yaxis2_low.layout.display = "none"
-    yaxis2_high.layout.display = "none"
-    custom_tab.layout.display = "none"
-  elif b["new"] == "PlotDATAQ":
-    grp_dropdown.layout.display = "none"
-    one_var_dropdown.layout.display = "none"
-    addon_tab.layout.display = "block"
-    xaxis_label.layout.display = "block"
-    xaxis_low.layout.display = "block"
-    xaxis_high.layout.display = "block"
-    yaxis_label.layout.display = "block"
-    yaxis_label.value = "FP Y Axis"
-    yaxis_low.layout.display = "block"
-    yaxis_high.layout.display = "block"
-    yaxis2_label.layout.display = "block"
-    yaxis2_low.layout.display = "block"
-    yaxis2_high.layout.display = "block"
-    custom_tab.layout.display = "none"
-  elif b["new"] == "PlotCustom":
-    grp_dropdown.layout.display = "none"
-    one_var_dropdown.layout.display = "none"
-    addon_tab.layout.display = "none"
+    def on_exp_dropdown_change(b):
+    # Updates run dropdown options when a new experiment is selected
+    update_run_options(b['new'])
+    exp_dropdown.observe(on_exp_dropdown_change, names='value')
+
+    # Dropdown for selecting group when using PlotGroup, PlotSingleVar, or PlotInteractive
+    grp_dropdown = widgets.Dropdown(options=col_names, description='Group')
+    def on_grp_dropdown_change(b):
+    get_one_var_options()
+    grp_dropdown.observe(on_grp_dropdown_change, names='value')
+
+    # Dropdown for selecting group when using PlotSingleVar or PlotInteractive
+    one_var_dropdown = widgets.Dropdown(description="Variable")
+
+    def get_one_var_options():
+    # Updates options single variable options when group is changed
+    global column_groups, column_keys, col_names, one_var_col_options, one_var_options
+    one_var_col_options = column_groups[col_names.index(grp_dropdown.value)]
+    one_var_options = []
+    for option in one_var_col_options:
+        one_var_options.append(column_keys[option])
+    one_var_dropdown.options = one_var_options
+    get_one_var_options()
+
+    separate_graphs = widgets.Checkbox(description="Separate Graphs")
+
+    run_dropdown = widgets.Dropdown(options=[], description='Run',
+                                    style={'description_width': 'initial'})
+
+    add_run_button = widgets.Button(description="Add Run", layout=widgets.Layout(width='12%'))
+    def on_add_run_button_click(b):
+    global experiments, axis_dct
     extra_tab.layout.display = "block"
-    custom_tab.layout.display = "block"
-  try:
-    update_run_options(exp_dropdown.value)
-  except:
-    pass
-plot_select.observe(on_plot_select_change, names='value')
-
-# Combobox for selecting experiment
-exp_dropdown = widgets.Combobox(options=[], description='Experiment',
-                                style={'description_width': 'initial'})
-def on_exp_dropdown_change(b):
-  # Updates run dropdown options when a new experiment is selected
-  update_run_options(b['new'])
-exp_dropdown.observe(on_exp_dropdown_change, names='value')
-
-# Dropdown for selecting group when using PlotGroup, PlotSingleVar, or PlotInteractive
-grp_dropdown = widgets.Dropdown(options=col_names, description='Group')
-def on_grp_dropdown_change(b):
-  get_one_var_options()
-grp_dropdown.observe(on_grp_dropdown_change, names='value')
-
-# Dropdown for selecting group when using PlotSingleVar or PlotInteractive
-one_var_dropdown = widgets.Dropdown(description="Variable")
-
-def get_one_var_options():
-  # Updates options single variable options when group is changed
-  global column_groups, column_keys, col_names, one_var_col_options, one_var_options
-  one_var_col_options = column_groups[col_names.index(grp_dropdown.value)]
-  one_var_options = []
-  for option in one_var_col_options:
-    one_var_options.append(column_keys[option])
-  one_var_dropdown.options = one_var_options
-get_one_var_options()
-
-separate_graphs = widgets.Checkbox(description="Separate Graphs")
-
-run_dropdown = widgets.Dropdown(options=[], description='Run',
-                                style={'description_width': 'initial'})
-
-add_run_button = widgets.Button(description="Add Run", layout=widgets.Layout(width='12%'))
-def on_add_run_button_click(b):
-  global experiments, axis_dct
-  extra_tab.layout.display = "block"
-  exp = exp_dropdown.value.split(" ")
-  run = exp[0] + exp[1] + "_" + run_dropdown.value
-  if run not in experiments:
-    axis_dct[run] = {'xlow':"", 'xhigh':"",
-                     'ylow':"", 'yhigh':"",
-                     'y2low':"", 'y2high':""}
-    run_tags.options = list(run_tags.options) + [run]
-    experiments.append(run)
-add_run_button.on_click(on_add_run_button_click)
-run_tags = widgets.ToggleButtons(options=[], style={"button_width": "auto"},
-                                 button_style='warning')
-def on_run_tag_change(b):
-  global axis_dct, run_tag_change
-  run_tag_change = True
-  try:
-    run = b['new']
-    xaxis_low.value = axis_dct[run]['xlow']
-    xaxis_high.value = axis_dct[run]['xhigh']
-    yaxis_low.value = axis_dct[run]['ylow']
-    yaxis_high.value = axis_dct[run]['yhigh']
-    yaxis2_low.value = axis_dct[run]['y2low']
-    yaxis2_high.value = axis_dct[run]['y2high']
-  except:
-    xaxis_low.value = ""
-    xaxis_high.value = ""
-    yaxis_low.value = ""
-    yaxis_high.value = ""
-    yaxis2_low.value = ""
-    yaxis2_high.value = ""
-  run_tag_change = False
-run_tags.observe(on_run_tag_change, names='value')
-
-shift_left_button = widgets.Button(description="<--", layout=widgets.Layout(width='60px'))
-def move_tag_left(b):
-  lst = list(run_tags.options)
-  index = run_tags.options.index(run_tags.value)
-  new_index = index - 1
-  new_index = max(0, min(new_index, len(lst) - 1))  # Ensure within bounds
-  
-  item = lst.pop(index)  # Remove item from current position
-  lst.insert(new_index, item)  # Insert item at new position
-  run_tags.options = lst
-  run_tags.value = item
-shift_left_button.on_click(move_tag_left)
-
-shift_right_button = widgets.Button(description="-->", layout=widgets.Layout(width='60px'))
-def move_tag_right(b):
-  lst = list(run_tags.options)
-  index = run_tags.options.index(run_tags.value)
-  new_index = index + 1
-  new_index = max(0, min(new_index, len(lst) - 1))  # Ensure within bounds
-  
-  item = lst.pop(index)  # Remove item from current position
-  lst.insert(new_index, item)  # Insert item at new position
-  run_tags.options = lst
-  run_tags.value = item
-shift_right_button.on_click(move_tag_right)
-
-remove_run_tag_button = widgets.Button(description="Remove Run", layout=widgets.Layout(width='120px'))
-def remove_run_tag(b):
-  global experiments, axis_dct
-  if run_tags.options != ():
-    experiments.remove(run_tags.value)
-    axis_dct.pop(run_tags.value)
-    run_tags.options = [option for option in run_tags.options if option != run_tags.value]
-  if run_tags.options == ():
-    extra_tab.layout.display = "none"
-remove_run_tag_button.on_click(remove_run_tag)
-
-def update_run_options(experiment):
-  run_dropdown.disabled = False
-  try:
-    directory = selected_directory + "/" + experiment + "/Data"
-    if plot_select.value == "PlotDATAQ":
-      runs = sorted([f for f in os.listdir(directory) if f.endswith('.csv') and f.startswith('DATAQ')])
-    else:
-      runs = sorted([f for f in os.listdir(directory) if f.endswith('.csv') and not f.startswith('DATAQ')])
-  except:
-    # Displays message when there are no csv files in folder
-    runs = ["No CSV files found"]
-    run_dropdown.disabled = True
-  run_dropdown.options = runs
-
-vert_line_box = addon_checkbox("Vertical Line")
-vert_line_text = addon_text("Vertical Line")
-horz_line_box = addon_checkbox("Horizontal Line")
-horz_line_text = addon_text("Horizontal Line")
-
-line_tab = widgets.VBox([
-    widgets.HBox([vert_line_box, vert_line_text]),
-    widgets.HBox([horz_line_box, horz_line_text])
-    ])
-
-textbox_size = "200px"
-xaxis_label = widgets.Label(value="X Axis")
-xaxis_low = widgets.Text(placeholder="Lower Limit",
-                         layout=widgets.Layout(width=textbox_size))
-xaxis_high = widgets.Text(placeholder="Upper Limit",
-                          layout=widgets.Layout(width=textbox_size))
-yaxis_label = widgets.Label(value="FP Y Axis")
-yaxis_low = widgets.Text(placeholder="Lower Limit",
-                         layout=widgets.Layout(width=textbox_size))
-yaxis_high = widgets.Text(placeholder="Upper Limit",
-                          layout=widgets.Layout(width=textbox_size))
-yaxis2_label = widgets.Label(value="RP Y Axis")
-yaxis2_low = widgets.Text(placeholder="Lower Limit",
-                          layout=widgets.Layout(width=textbox_size))
-yaxis2_high = widgets.Text(placeholder="Upper Limit",
-                           layout=widgets.Layout(width=textbox_size))
-def on_axis_text_change(b):
-  global axis_dct, run_tag_change
-  if not run_tag_change:
-    run = run_tags.value
-    axis_dct[run] = {'xlow':xaxis_low.value, 'xhigh':xaxis_high.value,
-                                'ylow':yaxis_low.value, 'yhigh':yaxis_high.value,
-                                'y2low':yaxis2_low.value, 'y2high':yaxis2_high.value}
-xaxis_low.observe(on_axis_text_change, names='value')
-xaxis_high.observe(on_axis_text_change, names='value')
-yaxis_low.observe(on_axis_text_change, names='value')
-yaxis_high.observe(on_axis_text_change, names='value')
-yaxis2_low.observe(on_axis_text_change, names='value')
-yaxis2_high.observe(on_axis_text_change, names='value')
-
-axis_tab = widgets.GridBox(children=[xaxis_label, xaxis_low, xaxis_high,
-                                     yaxis_label, yaxis_low, yaxis_high,
-                                     yaxis2_label, yaxis2_low, yaxis2_high],
-                            layout=widgets.Layout(width='80%',
-                            grid_template_rows='auto auto auto',
-                            grid_template_columns='15% 40% 40%',
-                            grid_template_areas='''
-                            "xaxis_label xaxis_low, xaxis_high"
-                            "yaxis_label yaxis_low, yaxis_high"
-                            "yaxis2_label yaxis2_low, yaxis2_high"
-                            '''))
-
-plot_events = widgets.Checkbox(description='Plot Events')
-
-addon_tab = widgets.VBox([axis_tab, plot_events])
-trace_var_dropdowns = []
-trace_buttons = widgets.ToggleButtons(options=[])
-add_trace = widgets.Button(description='Add Trace')
-def on_add_trace_button_click(b):
-  exp = exp_dropdown.value.split(" ")
-  run = exp[0] + exp[1] + "_" + run_dropdown.value
-  if run not in experiments:
-    trace_buttons.options = list(run_tags.options) + [run]
-
-  folder_name = "Data"
-  matching_folders, formatted_second_part = FindFolder([exp[0]+exp[1], run_dropdown.value])
-
-  if matching_folders:
-    # Assume the first match is the correct folder
-    target_folder = matching_folders[0]
-    print(f"Opening folder: {target_folder}")
-
-    data_folder = Path(target_folder) / folder_name
-    print(formatted_second_part)
-    data_path = Path(data_folder) / formatted_second_part  # Construct full file path
-    lab_view_options = pd.read_csv(data_path, nrows=0).columns.tolist()
-  
-  dataq_options = ['DATAQ FP', 'DATAQ RP']
-  trace_var_options = lab_view_options + dataq_options
-  trace_var_dropdowns.append(widgets.Dropdown(options=trace_var_options))
-  widgets.HBox(trace_var_dropdowns).layout.display = "block"
-
-add_trace.on_click(on_add_trace_button_click)
-
-custom_tab = widgets.VBox([trace_buttons, widgets.HBox(trace_var_dropdowns)])
-
-plot_confirm_button = widgets.Button(description="Confirm", button_style="success")
-def on_plot_confirm_button_click(b):
-  global experiments
-  if separate_graphs.value:
-    for experiment in experiments:
-      exp = [experiment]
-      eval(f"{plot_select.value}(exp)")
-  elif experiments == []:
     exp = exp_dropdown.value.split(" ")
-    run = [exp[0] + exp[1] + "_" + run_dropdown.value]
-    eval(f"{plot_select.value}(run)")
-  else:
-    eval(f"{plot_select.value}(experiments)")
-plot_confirm_button.on_click(on_plot_confirm_button_click)
+    run = exp[0] + exp[1] + "_" + run_dropdown.value
+    if run not in experiments:
+        axis_dct[run] = {'xlow':"", 'xhigh':"",
+                        'ylow':"", 'yhigh':"",
+                        'y2low':"", 'y2high':""}
+        run_tags.options = list(run_tags.options) + [run]
+        experiments.append(run)
+    add_run_button.on_click(on_add_run_button_click)
+    run_tags = widgets.ToggleButtons(options=[], style={"button_width": "auto"},
+                                    button_style='warning')
+    def on_run_tag_change(b):
+    global axis_dct, run_tag_change
+    run_tag_change = True
+    try:
+        run = b['new']
+        xaxis_low.value = axis_dct[run]['xlow']
+        xaxis_high.value = axis_dct[run]['xhigh']
+        yaxis_low.value = axis_dct[run]['ylow']
+        yaxis_high.value = axis_dct[run]['yhigh']
+        yaxis2_low.value = axis_dct[run]['y2low']
+        yaxis2_high.value = axis_dct[run]['y2high']
+    except:
+        xaxis_low.value = ""
+        xaxis_high.value = ""
+        yaxis_low.value = ""
+        yaxis_high.value = ""
+        yaxis2_low.value = ""
+        yaxis2_high.value = ""
+    run_tag_change = False
+    run_tags.observe(on_run_tag_change, names='value')
 
-clear_output_button = widgets.Button(description="Clear Output", button_style="danger")
-def on_clear_output_button_click(b):
-  reset_ui()
-clear_output_button.on_click(on_clear_output_button_click)
+    shift_left_button = widgets.Button(description="<--", layout=widgets.Layout(width='60px'))
+    def move_tag_left(b):
+    lst = list(run_tags.options)
+    index = run_tags.options.index(run_tags.value)
+    new_index = index - 1
+    new_index = max(0, min(new_index, len(lst) - 1))  # Ensure within bounds
+    
+    item = lst.pop(index)  # Remove item from current position
+    lst.insert(new_index, item)  # Insert item at new position
+    run_tags.options = lst
+    run_tags.value = item
+    shift_left_button.on_click(move_tag_left)
 
-# Display Section
-plot_tab = widgets.VBox([
-    lab_toggle,
-    widgets.HBox([plot_select, separate_graphs]),
-    widgets.HBox([exp_dropdown]),
-    widgets.HBox([run_dropdown, add_run_button, add_trace]),
-    widgets.HBox([grp_dropdown]),
-    widgets.HBox([one_var_dropdown]),
-    widgets.HBox([plot_confirm_button, clear_output_button])
-    ])
+    shift_right_button = widgets.Button(description="-->", layout=widgets.Layout(width='60px'))
+    def move_tag_right(b):
+    lst = list(run_tags.options)
+    index = run_tags.options.index(run_tags.value)
+    new_index = index + 1
+    new_index = max(0, min(new_index, len(lst) - 1))  # Ensure within bounds
+    
+    item = lst.pop(index)  # Remove item from current position
+    lst.insert(new_index, item)  # Insert item at new position
+    run_tags.options = lst
+    run_tags.value = item
+    shift_right_button.on_click(move_tag_right)
 
-extra_tab = widgets.VBox([run_tags, addon_tab, 
-                          widgets.HBox([remove_run_tag_button, shift_left_button, shift_right_button]),])
-                          # custom_tab])
+    remove_run_tag_button = widgets.Button(description="Remove Run", layout=widgets.Layout(width='120px'))
+    def remove_run_tag(b):
+    global experiments, axis_dct
+    if run_tags.options != ():
+        experiments.remove(run_tags.value)
+        axis_dct.pop(run_tags.value)
+        run_tags.options = [option for option in run_tags.options if option != run_tags.value]
+    if run_tags.options == ():
+        extra_tab.layout.display = "none"
+    remove_run_tag_button.on_click(remove_run_tag)
 
-# super_tab = widgets.VBox([lab_toggle, widgets.HBox([plot_tab, extra_tab])])
+    def update_run_options(experiment):
+    run_dropdown.disabled = False
+    try:
+        directory = selected_directory + "/" + experiment + "/Data"
+        if plot_select.value == "PlotDATAQ":
+        runs = sorted([f for f in os.listdir(directory) if f.endswith('.csv') and f.startswith('DATAQ')])
+        else:
+        runs = sorted([f for f in os.listdir(directory) if f.endswith('.csv') and not f.startswith('DATAQ')])
+    except:
+        # Displays message when there are no csv files in folder
+        runs = ["No CSV files found"]
+        run_dropdown.disabled = True
+    run_dropdown.options = runs
 
-box = widgets.GridBox(children=[plot_tab, extra_tab],
-                      layout=widgets.Layout(
-                      width='100%',
-                      grid_template_rows='auto',
-                      grid_template_columns='50% 50%',
-                      grid_template_areas='''
-                      "plot_tab extra_tab"
-                      '''))
+    vert_line_box = addon_checkbox("Vertical Line")
+    vert_line_text = addon_text("Vertical Line")
+    horz_line_box = addon_checkbox("Horizontal Line")
+    horz_line_text = addon_text("Horizontal Line")
 
-# Set all widget displays to none
-plot_tab.layout.display = "none"
-lab_toggle.layout.display = "none"
-grp_dropdown.layout.display = "none"
-one_var_dropdown.layout.display = "none"
-addon_tab.layout.display = "block"
-extra_tab.layout.display = "none"
-# custom_tab.layout.display = "block"
+    line_tab = widgets.VBox([
+        widgets.HBox([vert_line_box, vert_line_text]),
+        widgets.HBox([horz_line_box, horz_line_text])
+        ])
 
-# Reset textbox UI to allign
-xaxis_label.layout.display = "none"
-xaxis_low.layout.display = "none"
-xaxis_high.layout.display = "none"
-yaxis_label.layout.display = "none"
-yaxis_low.layout.display = "none"
-yaxis_high.layout.display = "none"
-yaxis2_label.layout.display = "none"
-yaxis2_low.layout.display = "none"
-yaxis2_high.layout.display = "none"
-xaxis_label.layout.display = "block"
-xaxis_low.layout.display = "block"
-xaxis_high.layout.display = "block"
-yaxis_label.layout.display = "block"
-yaxis_low.layout.display = "block"
-yaxis_high.layout.display = "block"
-yaxis2_label.layout.display = "block"
-yaxis2_low.layout.display = "block"
-yaxis2_high.layout.display = "block"
+    textbox_size = "200px"
+    xaxis_label = widgets.Label(value="X Axis")
+    xaxis_low = widgets.Text(placeholder="Lower Limit",
+                            layout=widgets.Layout(width=textbox_size))
+    xaxis_high = widgets.Text(placeholder="Upper Limit",
+                            layout=widgets.Layout(width=textbox_size))
+    yaxis_label = widgets.Label(value="FP Y Axis")
+    yaxis_low = widgets.Text(placeholder="Lower Limit",
+                            layout=widgets.Layout(width=textbox_size))
+    yaxis_high = widgets.Text(placeholder="Upper Limit",
+                            layout=widgets.Layout(width=textbox_size))
+    yaxis2_label = widgets.Label(value="RP Y Axis")
+    yaxis2_low = widgets.Text(placeholder="Lower Limit",
+                            layout=widgets.Layout(width=textbox_size))
+    yaxis2_high = widgets.Text(placeholder="Upper Limit",
+                            layout=widgets.Layout(width=textbox_size))
+    def on_axis_text_change(b):
+    global axis_dct, run_tag_change
+    if not run_tag_change:
+        run = run_tags.value
+        axis_dct[run] = {'xlow':xaxis_low.value, 'xhigh':xaxis_high.value,
+                                    'ylow':yaxis_low.value, 'yhigh':yaxis_high.value,
+                                    'y2low':yaxis2_low.value, 'y2high':yaxis2_high.value}
+    xaxis_low.observe(on_axis_text_change, names='value')
+    xaxis_high.observe(on_axis_text_change, names='value')
+    yaxis_low.observe(on_axis_text_change, names='value')
+    yaxis_high.observe(on_axis_text_change, names='value')
+    yaxis2_low.observe(on_axis_text_change, names='value')
+    yaxis2_high.observe(on_axis_text_change, names='value')
 
-display(box)
+    axis_tab = widgets.GridBox(children=[xaxis_label, xaxis_low, xaxis_high,
+                                        yaxis_label, yaxis_low, yaxis_high,
+                                        yaxis2_label, yaxis2_low, yaxis2_high],
+                                layout=widgets.Layout(width='80%',
+                                grid_template_rows='auto auto auto',
+                                grid_template_columns='15% 40% 40%',
+                                grid_template_areas='''
+                                "xaxis_label xaxis_low, xaxis_high"
+                                "yaxis_label yaxis_low, yaxis_high"
+                                "yaxis2_label yaxis2_low, yaxis2_high"
+                                '''))
+
+    plot_events = widgets.Checkbox(description='Plot Events')
+
+    addon_tab = widgets.VBox([axis_tab, plot_events])
+    trace_var_dropdowns = []
+    trace_buttons = widgets.ToggleButtons(options=[])
+    add_trace = widgets.Button(description='Add Trace')
+    def on_add_trace_button_click(b):
+    exp = exp_dropdown.value.split(" ")
+    run = exp[0] + exp[1] + "_" + run_dropdown.value
+    if run not in experiments:
+        trace_buttons.options = list(run_tags.options) + [run]
+
+    folder_name = "Data"
+    matching_folders, formatted_second_part = FindFolder([exp[0]+exp[1], run_dropdown.value])
+
+    if matching_folders:
+        # Assume the first match is the correct folder
+        target_folder = matching_folders[0]
+        print(f"Opening folder: {target_folder}")
+
+        data_folder = Path(target_folder) / folder_name
+        print(formatted_second_part)
+        data_path = Path(data_folder) / formatted_second_part  # Construct full file path
+        lab_view_options = pd.read_csv(data_path, nrows=0).columns.tolist()
+    
+    dataq_options = ['DATAQ FP', 'DATAQ RP']
+    trace_var_options = lab_view_options + dataq_options
+    trace_var_dropdowns.append(widgets.Dropdown(options=trace_var_options))
+    widgets.HBox(trace_var_dropdowns).layout.display = "block"
+
+    add_trace.on_click(on_add_trace_button_click)
+
+    custom_tab = widgets.VBox([trace_buttons, widgets.HBox(trace_var_dropdowns)])
+
+    plot_confirm_button = widgets.Button(description="Confirm", button_style="success")
+    def on_plot_confirm_button_click(b):
+    global experiments
+    if separate_graphs.value:
+        for experiment in experiments:
+        exp = [experiment]
+        eval(f"{plot_select.value}(exp)")
+    elif experiments == []:
+        exp = exp_dropdown.value.split(" ")
+        run = [exp[0] + exp[1] + "_" + run_dropdown.value]
+        eval(f"{plot_select.value}(run)")
+    else:
+        eval(f"{plot_select.value}(experiments)")
+    plot_confirm_button.on_click(on_plot_confirm_button_click)
+
+    clear_output_button = widgets.Button(description="Clear Output", button_style="danger")
+    def on_clear_output_button_click(b):
+    reset_ui()
+    clear_output_button.on_click(on_clear_output_button_click)
+
+    # Display Section
+    plot_tab = widgets.VBox([
+        lab_toggle,
+        widgets.HBox([plot_select, separate_graphs]),
+        widgets.HBox([exp_dropdown]),
+        widgets.HBox([run_dropdown, add_run_button, add_trace]),
+        widgets.HBox([grp_dropdown]),
+        widgets.HBox([one_var_dropdown]),
+        widgets.HBox([plot_confirm_button, clear_output_button])
+        ])
+
+    extra_tab = widgets.VBox([run_tags, addon_tab, 
+                            widgets.HBox([remove_run_tag_button, shift_left_button, shift_right_button]),])
+                            # custom_tab])
+
+    # super_tab = widgets.VBox([lab_toggle, widgets.HBox([plot_tab, extra_tab])])
+
+    box = widgets.GridBox(children=[plot_tab, extra_tab],
+                        layout=widgets.Layout(
+                        width='100%',
+                        grid_template_rows='auto',
+                        grid_template_columns='50% 50%',
+                        grid_template_areas='''
+                        "plot_tab extra_tab"
+                        '''))
+
+    # Set all widget displays to none
+    plot_tab.layout.display = "none"
+    lab_toggle.layout.display = "none"
+    grp_dropdown.layout.display = "none"
+    one_var_dropdown.layout.display = "none"
+    addon_tab.layout.display = "block"
+    extra_tab.layout.display = "none"
+    # custom_tab.layout.display = "block"
+
+    # Reset textbox UI to allign
+    xaxis_label.layout.display = "none"
+    xaxis_low.layout.display = "none"
+    xaxis_high.layout.display = "none"
+    yaxis_label.layout.display = "none"
+    yaxis_low.layout.display = "none"
+    yaxis_high.layout.display = "none"
+    yaxis2_label.layout.display = "none"
+    yaxis2_low.layout.display = "none"
+    yaxis2_high.layout.display = "none"
+    xaxis_label.layout.display = "block"
+    xaxis_low.layout.display = "block"
+    xaxis_high.layout.display = "block"
+    yaxis_label.layout.display = "block"
+    yaxis_low.layout.display = "block"
+    yaxis_high.layout.display = "block"
+    yaxis2_label.layout.display = "block"
+    yaxis2_low.layout.display = "block"
+    yaxis2_high.layout.display = "block"
+
+    display(box)
+if __name__ == "__main__":
+    main()
