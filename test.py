@@ -862,7 +862,7 @@ def format_string(s):
       formatted_parts.append(part)  # Keep unchanged if it doesn't match
   return ", ".join(formatted_parts)  # Join back with a comma and space
 
-def main():
+def run():
     # Toggles between Lab A and Lab B
     lab_toggle = widgets.ToggleButton(description="Lab A", button_style="danger")
     def update_lab_text(b):
@@ -1263,5 +1263,3 @@ def main():
     yaxis2_high.layout.display = "block"
 
     display(box)
-if __name__ == "__main__":
-    main()
